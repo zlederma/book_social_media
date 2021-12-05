@@ -1,0 +1,13 @@
+/* This is where fonts imported from google fonts go. */
+/* Also where styling that effects the entire application go */
+
+/* Sans Serif headings: Oswald - font-family: 'Oswald', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+
+
+/* Serif everything else - font-family: 'Cormorant Garamond', serif; */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Oswald&display=swap');
+
+* {
+    box-sizing: border-box;
+}
