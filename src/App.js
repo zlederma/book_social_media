@@ -1,10 +1,17 @@
 import { background } from "./styles/Styles"
-// import background from "../src/assets/background_image.jpg"
+import './Fonts.css'
+import Book from "./components/BookCards/Book";
+import { ThemeProvider } from "@emotion/react";
+import { theme } from "./styles/Theme"
+
 
 function App() {
   return (
-    <div style={background}>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div style={background}>
+        <Book></Book>
+      </div>
+    </ThemeProvider >
   );
 }
 
