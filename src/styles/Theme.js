@@ -1,8 +1,9 @@
 //This is where the customized theme for Material UI goes
-import { createTheme } from '@mui/material/styles';
+// import { createTheme } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 
-export const theme = createTheme({
+export let theme = createTheme({
     palette: {
         primary: {
             // light: will be calculated from palette.primary.main,
@@ -16,4 +17,41 @@ export const theme = createTheme({
         },
 
     },
+    typography: {
+        h1: {
+            fontFamily: "Oswald, sans-serif"
+        },
+        h2: {
+            fontFamily: "Oswald, sans-serif"
+        },
+        h3: {
+            fontFamily: "Oswald, sans-serif"
+        },
+        h4: {
+            fontFamily: "Oswald, sans-serif"
+        },
+        h5: {
+            fontFamily: "Oswald, sans-serif"
+        },
+        h6: {
+            fontFamily: "Oswald, sans-serif"
+        },
+        button: {
+            fontFamily: "Oswald, sans-serif"
+        },
+
+        body1: {
+            fontFamily: "Oswald, sans-serif"
+
+        },
+
+        body2: {
+            fontFamily: "Cormorant Garamond, serif"
+        },
+
+
+
+    }
 });
+
+theme = responsiveFontSizes(theme);
