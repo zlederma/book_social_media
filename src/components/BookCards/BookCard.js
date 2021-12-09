@@ -22,6 +22,17 @@ const book = {
 
 
 export default function BookCard({ title, author, picture }) {
+    // if (title === undefined) {
+    //     title = "not known"
+    // }
+
+    // if (picture === undefined) {
+    //     picture = test_image
+    // }
+
+    // if (author === undefined) {
+    //     author = "no author"
+    // }
     return (
         // maxWidth: 200;
         <Card sx={{ backgroundColor: "#f7f3f1" }}>
