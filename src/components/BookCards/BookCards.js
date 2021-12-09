@@ -5,21 +5,26 @@ import BookCard from "./BookCard"
 
 import React from 'react'
 
-var items = [];
-for (let i = 0; i < 20; i++) {
-    items.push(
-        <Grid item xs={6} sm={3} md={2} lg={2}>
-            <BookCard></BookCard>
-        </Grid>
-    )
-}
 
+export default function BookCards({ books }) {
 
-export default function BookCards() {
+    //update later
+    if (books == null) {
+        return (
+            <p> search for a book</p>
+        )
+    }
+
     return (
         <Box sx={{ flexGrow: 1, margin: 3 }}>
             <Grid container spacing={2}>
-                {items}
+                {books.map((book) =>
+                    <Grid item xs={6} sm={3} md={2} lg={2}>
+                        <BookCard title={book.title}
+                            author={book.author}
+                            picture={book.picture.thumbnail} />
+                    </Grid>)}
+
             </Grid>
         </Box>
     )
