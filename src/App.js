@@ -20,10 +20,13 @@ function App() {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  // const fetchSearch = `https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=${API_KEY}`; 
+
+  const fetchSearch = `https://www.googleapis.com/books/v1/volumes?q=flowers&projection=lite&langRestrict=en&key=${API_KEY}`;
 
   async function fetchBooksHandler() {
     setIsLoading(true);
-    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=${API_KEY}`);
+    const response = await fetch(fetchSearch);
     const data = await response.json();
     console.log(data);
 
@@ -49,10 +52,10 @@ function App() {
       <div style={background}>
         <NavBar />
         <button onClick={fetchBooksHandler}> click me </button>
-        <SearchBar onChange={fetchBooksHandler} />
+        <SearchBar books={books} />
         {/* maxes the viewport to 1100px */}
         <div style={{ maxWidth: "1400px", margin: "auto" }}>
-          <BookCards></BookCards>
+          <BookCards books={books}></BookCards>
         </div>
       </div>
     </ThemeProvider >
