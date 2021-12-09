@@ -48,10 +48,20 @@ export let theme = createTheme({
         body2: {
             fontFamily: "Cormorant Garamond, serif"
         },
+    },
 
-
-
-    }
+    // inputRoot: {
+    //     color: "purple",
+    //     "& .MuiOutlinedInput-notchedOutline": {
+    //         borderColor: "green"
+    //     },
+    //     "&:hover .MuiOutlinedInput-notchedOutline": {
+    //         borderColor: "red"
+    //     },
+    //     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    //         borderColor: "purple"
+    //     }
+    // }
 });
 
 theme = responsiveFontSizes(theme);
