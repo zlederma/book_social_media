@@ -25,18 +25,18 @@ export default function BookCard({ title, author, picture }) {
     return (
         // maxWidth: 200;
         <Card sx={{ backgroundColor: "#f7f3f1" }}>
-            <CardMedia sx={{ padding: 1, borderBottom: "1px solid #974c0f" }}
+            <CardMedia sx={{ borderBottom: "1px solid #974c0f", objectFit: "scale-down" }}
                 component="img"
-                height="auto"
-                image={book.picture}
-                alt={`picture of ${book.title}`}
+                height="200"
+                src={picture}
+                alt={`picture of ${title}`}
             />
             <CardContent sx={{ my: -1 }}>
                 <Typography noWrap variant="body1" component="div">
-                    {book.title}
+                    {title}
                 </Typography>
                 <Typography noWrap variant="body2" color="text.secondary">
-                    {book.author}
+                    {author}
                 </Typography>
             </CardContent>
         </Card>
