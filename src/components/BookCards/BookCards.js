@@ -9,7 +9,7 @@ import React from 'react'
 export default function BookCards({ books }) {
 
     //update later
-    if (books == null) {
+    if (books.length === 0) {
         return (
             <p> search for a book</p>
         )

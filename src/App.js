@@ -37,6 +37,10 @@ function App() {
   const fetchSearch = `https://www.googleapis.com/books/v1/volumes?q=${query}&projection=lite&langRestrict=en&key=${API_KEY}`;
 
   async function fetchBooksHandler() {
+    //if there is no query
+    if (query === "") {
+      return
+    }
     setIsLoading(true);
     //query must be at least 4 letters long
     const response = await fetch(fetchSearch);
