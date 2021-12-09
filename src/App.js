@@ -45,7 +45,7 @@ function App() {
 
     const transformedBooks = data.items.map((bookData) => {
       //error catching for if there is no image
-      //TODO update error catching
+      //TODO update error catching somehow add author
       if (typeof bookData.volumeInfo.imageLinks == "undefined" || bookData.volumeInfo.title === null) {
         console.log("the image is undefined")
         return {
