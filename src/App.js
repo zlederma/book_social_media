@@ -29,6 +29,7 @@ function App() {
     console.log(inputValue)
     setQuery(inputValue);
     console.log(query)
+    fetchBooksHandler()
   }
 
   // const fetchSearch = `https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=${API_KEY}`; 
@@ -50,7 +51,15 @@ function App() {
     const transformedBooks = data.items.map((bookData) => {
       //error catching for if there is no image
       //TODO update error catching somehow add author
-      if (typeof bookData.volumeInfo.imageLinks == "undefined" || bookData.volumeInfo.title === null) {
+      const badAuthor = () => {
+        if (typeof bookData.volumeInfo.authors == "undefined" || bookData.volumeInfo.authors.length === 0 || bookData.volumeInfo.authors[0] === null) {
+          console.log("here")
+          return true
+        }
+        return false;
+      }
+
+      if (typeof bookData.volumeInfo.imageLinks == "undefined" || bookData.volumeInfo.title === null || badAuthor()) {
         console.log("the image is undefined")
         return {
           title: "no",
