@@ -13,14 +13,21 @@ const iconStyle = {
     marginRight: "6px"
 }
 
-export default function AddBookButton() {
+export default function AddBookButton({ onBookAdd }) {
     //This will keep track of whether or not a book is added to someones library
     const [bookAdded, setBookAdded] = useState(false)
 
+
     const onClickHandler = () => {
+        //sends Book whether or not to add the book to an array.
+        onBookAdd(bookAdded)
         //sets book added to the opposite boolean value as it was before
         bookAdded ? setBookAdded(false) : setBookAdded(true)
+
+        //sends Book whether or not to add the book to an array.
+
     }
+
     return (
         <div>
             {bookAdded ?

@@ -13,10 +13,15 @@ import AddBookButton from "./AddBookButton"
 
 
 export default function BookCard({ title, author, picture }) {
+    const onBookAddHandler = (bookAdded) => {
+        if (bookAdded) {
+            console.log("it was true")
+        }
+    }
     return (
         // maxWidth: 200;
         <Card sx={{ backgroundColor: "#f7f3f1" }}>
-            <AddBookButton />
+            <AddBookButton onBookAdd={onBookAddHandler} />
             <CardMedia sx={{ borderBottom: "1px solid #974c0f", objectFit: "scale-down" }}
                 component="img"
                 height="200"
