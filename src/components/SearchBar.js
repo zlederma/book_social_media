@@ -36,6 +36,7 @@ export default function SearchBar({ books, onInputValueChange }) {
                 options={books.map((option) => option.title)}
                 renderInput={(params) => (
                     <TextField
+                        color="secondary"
                         {...params}
                         label="Search for book"
                         InputProps={{
