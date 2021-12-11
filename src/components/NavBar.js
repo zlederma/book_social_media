@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['My Library'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const NavBar = () => {
@@ -35,7 +35,7 @@ const NavBar = () => {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" elevation={0}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography

@@ -7,11 +7,12 @@ import { theme } from "./styles/Theme"
 import BookCards from "./components/BookCards/BookCards"
 import NavBar from "./components/NavBar"
 import SearchBar from "./components/SearchBar"
-
+import MyLibrary from "./pages/MyLibrary"
 //Material UI imports
 import { ThemeProvider } from "@emotion/react";
 
 import { useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import test_image from "/Users/zoelederman/book_social_media/src/assets/test_image.png"
 
@@ -78,11 +79,6 @@ function App() {
     setIsLoading(false);
   }
 
-  // console.log(books);
-  // console.log(books[0].picture.thumbnail)
-
-
-
   return (
     <ThemeProvider theme={theme}>
       <div style={background}>
@@ -92,6 +88,8 @@ function App() {
         {/* maxes the viewport to 1100px */}
         <div style={{ maxWidth: "1400px", margin: "auto" }}>
           <BookCards books={books}></BookCards>
+          <MyLibrary />
+
         </div>
       </div>
     </ThemeProvider >
