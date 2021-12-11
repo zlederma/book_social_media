@@ -50,18 +50,7 @@ export let theme = createTheme({
         },
     },
 
-    // inputRoot: {
-    //     color: "purple",
-    //     "& .MuiOutlinedInput-notchedOutline": {
-    //         borderColor: "green"
-    //     },
-    //     "&:hover .MuiOutlinedInput-notchedOutline": {
-    //         borderColor: "red"
-    //     },
-    //     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    //         borderColor: "purple"
-    //     }
-    // }
+
 });
 
 theme = responsiveFontSizes(theme);
