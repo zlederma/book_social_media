@@ -3,7 +3,7 @@ import BookCards from "../components/BookCards/BookCard"
 import { useState } from "react"
 
 export default function MyLibrary() {
-    const [myBooks, setMyBooks] = useState([])
+    const [myBooks, setMyBooks] = useState([{}])
     return (
         <div>
             <Typography variant="h6"> My Library</Typography>

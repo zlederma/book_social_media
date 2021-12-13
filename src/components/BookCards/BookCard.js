@@ -2,7 +2,7 @@
 // import test_image from "src/assets/test_image.jpg";
 import test_image from "/Users/zoelederman/book_social_media/src/assets/test_image.png"
 
-import * as React from 'react';
+import { useState } from 'react';
 import { Card, CardContent } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
@@ -13,11 +13,25 @@ import AddBookButton from "./AddBookButton"
 
 
 export default function BookCard({ title, author, picture }) {
+    const [userBook, setUserBook] = useState({
+        title: "",
+        author: "",
+        picture: ""
+    })
     const onBookAddHandler = (bookAdded) => {
-        if (bookAdded) {
-            console.log("it was true")
-        }
+        bookAdded ?
+            setUserBook({
+                title: title,
+                author: author,
+                picture: picture
+            }) :
+            setUserBook({
+                title: "",
+                author: "",
+                picture: ""
+            })
     }
+
     return (
         // maxWidth: 200;
         <Card sx={{ backgroundColor: "#f7f3f1" }}>
