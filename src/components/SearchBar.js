@@ -3,24 +3,27 @@
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { theme } from "../styles/Theme"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function SearchBar({ books, onInputValueChange }) {
 
     const [inputValue, setInputValue] = useState('')
+    // useEffect(() => {
+    //     const identifier = setTimeout(() => {
+    //         onInputValueChange(e.target.value)
+    //     }, 500);
+
+    //     return () => {
+    //         clearTimeout(identifier)
+    //     }
+    // }, [inputValue])
 
     const inputChangeHandler = (e) => {
         //if the query is less than 4 charactars an error occurs
         if (e.target.value.length >= 4) {
-            // console.log(e.target.value);
-            setInputValue(e.target.value);
-            onInputValueChange(inputValue)
+            onInputValueChange(e.target.value)
         }
     };
-
-    // if (e.key === "Enter") {
-    //     console.log("enter")
-    // }
 
     return (
         <div style={{ maxWidth: "400px", margin: "auto" }}>
