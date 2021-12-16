@@ -24,24 +24,23 @@ const API_KEY = process.env.REACT_APP_API_KEY
 function App() {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [query, setQuery] = useState("")
   const myBooks = useSelector((state) => state.myBooks.books)
 
 
   //Gets the value of the search from the user, and sets it to query
   const inputValueChangeHandler = (inputValue) => {
     console.log(inputValue)
-    setQuery(inputValue);
-    console.log(query)
-    fetchBooksHandler()
+    fetchBooksHandler(inputValue)
   }
 
   // const fetchSearch = `https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=${API_KEY}`; 
 
 
-  const fetchSearch = `https://www.googleapis.com/books/v1/volumes?q=${query}&projection=lite&langRestrict=en&key=${API_KEY}`;
 
-  async function fetchBooksHandler() {
+  async function fetchBooksHandler(query) {
+
+    const fetchSearch = `https://www.googleapis.com/books/v1/volumes?q=${query}&projection=lite&langRestrict=en&key=${API_KEY}`;
+
     //if there is no query
     if (query === "") {
       return
@@ -50,7 +49,6 @@ function App() {
     //query must be at least 4 letters long
     const response = await fetch(fetchSearch);
     const data = await response.json();
-    console.log(data);
 
     const transformedBooks = data.items.map((bookData) => {
       //error catching for if there is no image
@@ -81,8 +79,6 @@ function App() {
     setBooks(transformedBooks);
     setIsLoading(false);
   }
-
-  console.log(books)
 
   return (
     <ThemeProvider theme={theme}>
