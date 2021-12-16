@@ -21,8 +21,6 @@ function App() {
   const [books, setBooks] = useState([]);
 
   const fetchBooksHandler = (books) => {
-    console.log("got")
-    console.log(books)
     setBooks(books)
   }
 

@@ -10,18 +10,27 @@ const API_KEY = process.env.REACT_APP_API_KEY
 export default function SearchBar({ onFetchBooks }) {
     const [isLoading, setIsLoading] = useState(false)
     const [books, setBooks] = useState([]);
-    // useEffect(() => {
-    //     const identifier = setTimeout(() => {
-    //         onInputValueChange(e.target.value)
-    //     }, 500);
+    const [inputValue, setInputValue] = useState("")
+    const [targetValue, setTargetValue] = useState("")
 
-    //     return () => {
-    //         clearTimeout(identifier)
-    //     }
-    // }, [inputValue])
+
+    useEffect(() => {
+        const identifier = setTimeout(() => {
+            //TODO
+            //it's never getting to this line figure
+            console.log("checking")
+            setInputValue(inputValue)
+        }, 500);
+
+        return () => {
+            console.log("clean")
+            clearTimeout(identifier)
+        }
+    }, [inputValue])
 
     async function onInputChangeHandler(e) {
         if (e.target.value.length >= 4) {
+            setInputValue(e.target.value)
             const fetchSearch = `https://www.googleapis.com/books/v1/volumes?q=${e.target.value}&projection=lite&langRestrict=en&key=${API_KEY}`;
 
             //if there is no query
@@ -38,7 +47,6 @@ export default function SearchBar({ onFetchBooks }) {
                 //TODO update error catching somehow add author
                 const badAuthor = () => {
                     if (typeof bookData.volumeInfo.authors == "undefined" || bookData.volumeInfo.authors.length === 0 || bookData.volumeInfo.authors[0] === null) {
-                        console.log("here")
                         return true
                     }
                     return false;
@@ -61,7 +69,6 @@ export default function SearchBar({ onFetchBooks }) {
 
 
             setBooks(transformedBooks);
-            console.log(books)
             onFetchBooks(transformedBooks)
             setIsLoading(false);
         }
