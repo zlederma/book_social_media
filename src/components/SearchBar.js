@@ -11,7 +11,7 @@ export default function SearchBar({ onFetchBooks }) {
     const [isLoading, setIsLoading] = useState(false)
     const [books, setBooks] = useState([]);
     const [inputValue, setInputValue] = useState("")
-    const [targetValue, setTargetValue] = useState("")
+
 
 
     useEffect(() => {
@@ -42,7 +42,7 @@ export default function SearchBar({ onFetchBooks }) {
             const response = await fetch(fetchSearch);
             const data = await response.json();
 
-            const transformedBooks = data.items.map((bookData) => {
+            let transformedBooks = data.items.map((bookData) => {
                 //error catching for if there is no image
                 //TODO update error catching somehow add author
                 const badAuthor = () => {
@@ -67,6 +67,17 @@ export default function SearchBar({ onFetchBooks }) {
                 };
             });
 
+            const toKeep = (book) => {
+                if (book.title === 'no') {
+                    return false
+                }
+                return true
+            }
+            console.log("before")
+            console.log(transformedBooks)
+            transformedBooks = transformedBooks.filter(toKeep);
+            console.log("after")
+            console.log(transformedBooks)
 
             setBooks(transformedBooks);
             onFetchBooks(transformedBooks)
@@ -86,7 +97,8 @@ export default function SearchBar({ onFetchBooks }) {
                 onInputChange={onInputChangeHandler}
                 onKeyPress={onInputChangeHandler}
                 disableClearable
-                options={books.map((option) => option.title)}
+                //TODO make the title and author text different
+                options={books.map((option) => option.title + " by " + option.author)}
                 renderInput={(params) => (
                     <TextField
                         color="secondary"
