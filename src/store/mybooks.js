@@ -1,15 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
-
 //initally books is an arrary of objects
-const initialMyBooksState = { books: [{ title: "", author: "", picture: "" }] }
-//  [{title: "", author: "", picture: ""}]
+const initialMyBooksState = { books: [] }
+
 
 const myBooksSlice = createSlice({
     name: 'myBooks',
     initialState: initialMyBooksState,
     reducers: {
-        add(state) {
-            state.books.push({ title: "test", author: "test", picture: "" });
+        add(state, action) {
+            state.books.push(action.payload);
             console.log(state.books.length)
         }
     }

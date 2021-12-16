@@ -1,9 +1,10 @@
 import { Typography } from "@mui/material"
 import BookCards from "../components/BookCards/BookCard"
-import { useState } from "react"
+import { useSelector } from "react-redux"
+
 
 export default function MyLibrary() {
-    const [myBooks, setMyBooks] = useState([{}])
+    const myBooks = useSelector((state) => state.myBooks.books)
     return (
         <div>
             <Typography variant="h6"> My Library</Typography>
