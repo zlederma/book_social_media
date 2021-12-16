@@ -16,6 +16,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import test_image from "/Users/zoelederman/book_social_media/src/assets/test_image.png"
 
+import { useSelector } from "react-redux"
+
 //gets API key stored in an environment variable
 const API_KEY = process.env.REACT_APP_API_KEY
 
@@ -23,6 +25,7 @@ function App() {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("")
+  const myBooks = useSelector((state) => state.myBooks.books)
 
 
   //Gets the value of the search from the user, and sets it to query
@@ -79,6 +82,8 @@ function App() {
     setIsLoading(false);
   }
 
+  console.log(books)
+
   return (
     <ThemeProvider theme={theme}>
       <div style={background}>
@@ -88,6 +93,7 @@ function App() {
         {/* maxes the viewport to 1100px */}
         <div style={{ maxWidth: "1400px", margin: "auto" }}>
           <BookCards books={books}></BookCards>
+          <BookCards books={myBooks}></BookCards>
           <MyLibrary />
 
         </div>
