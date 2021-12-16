@@ -19,7 +19,6 @@ import { useSelector } from "react-redux"
 
 function App() {
   const [books, setBooks] = useState([]);
-  const myBooks = useSelector((state) => state.myBooks.books)
 
   const fetchBooksHandler = (books) => {
     console.log("got")
@@ -35,7 +34,6 @@ function App() {
         {/* maxes the viewport to 1100px */}
         <div style={{ maxWidth: "1400px", margin: "auto" }}>
           <BookCards books={books}></BookCards>
-          <BookCards books={myBooks}></BookCards>
           <MyLibrary />
 
         </div>

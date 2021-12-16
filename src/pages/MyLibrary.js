@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material"
-import BookCards from "../components/BookCards/BookCard"
+import BookCards from "../components/BookCards/BookCards"
 import { useSelector } from "react-redux"
 
 
