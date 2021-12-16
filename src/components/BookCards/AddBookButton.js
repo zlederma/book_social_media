@@ -20,6 +20,7 @@ export default function AddBookButton({ onBookAdd }) {
 
     const onClickHandler = () => {
         //sends Book whether or not to add the book to an array.
+        // onBookAdd(bookAdded)
         onBookAdd(bookAdded)
         //sets book added to the opposite boolean value as it was before
         bookAdded ? setBookAdded(false) : setBookAdded(true)

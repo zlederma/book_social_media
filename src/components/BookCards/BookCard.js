@@ -11,6 +11,9 @@ import Typography from '@mui/material/Typography';
 import { borderBottom } from "@mui/system";
 import AddBookButton from "./AddBookButton"
 
+import { useSelector, useDispatch } from 'react-redux'
+import { myBooksActions } from "../../store/mybooks";
+
 
 export default function BookCard({ title, author, picture }) {
     const [userBook, setUserBook] = useState({
@@ -18,18 +21,28 @@ export default function BookCard({ title, author, picture }) {
         author: "",
         picture: ""
     })
+
+    const dispatch = useDispatch();
+    // const onBookAddHandler = (bookAdded) => {
+    //     bookAdded ?
+    //         setUserBook({
+    //             title: title,
+    //             author: author,
+    //             picture: picture
+    //         }) :
+    //         setUserBook({
+    //             title: "",
+    //             author: "",
+    //             picture: ""
+    //         })
+    // }
+
     const onBookAddHandler = (bookAdded) => {
-        bookAdded ?
-            setUserBook({
-                title: title,
-                author: author,
-                picture: picture
-            }) :
-            setUserBook({
-                title: "",
-                author: "",
-                picture: ""
-            })
+        console.log(bookAdded)
+        dispatch(myBooksActions.add())
+        // bookAdded ?
+        //     dispatch(myBooksActions.add()) :
+        //     dispatch(myBooksActions.add())
     }
 
     return (
