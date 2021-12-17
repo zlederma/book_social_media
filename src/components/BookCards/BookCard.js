@@ -30,7 +30,6 @@ export default function BookCard({ title, author, picture }) {
         }
 
         else {
-            // dispatch(myBooksActions.remove(currBook))
             dispatch(myBooksActions.remove(myBooks.findIndex(e => e.picture.thumbnail === currBook.picture.thumbnail)))
             setFill(false)
         }
@@ -38,7 +37,6 @@ export default function BookCard({ title, author, picture }) {
 
     return (
         <Card sx={{ backgroundColor: "#f7f3f1" }}>
-            {/* I should add a filled vs unfilled prop */}
             <AddBookButton onBookAdd={onBookAddHandler} fill={fill} />
             <CardMedia sx={{ borderBottom: "1px solid #974c0f", objectFit: "scale-down" }}
                 component="img"
