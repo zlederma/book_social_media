@@ -13,17 +13,17 @@ const iconStyle = {
     marginRight: "6px"
 }
 
-export default function AddBookButton({ onBookAdd }) {
+export default function AddBookButton({ onBookAdd, fill }) {
     //This will keep track of whether or not a book is added to someones library
-    const [bookAdded, setBookAdded] = useState(false)
+    // const [bookAdded, setBookAdded] = useState(false)
 
-
+    console.log(fill)
     const onClickHandler = () => {
         //sends Book whether or not to add the book to an array.
         // onBookAdd(bookAdded)
-        onBookAdd(bookAdded)
+        onBookAdd()
         //sets book added to the opposite boolean value as it was before
-        bookAdded ? setBookAdded(false) : setBookAdded(true)
+        // bookAdded ? setBookAdded(false) : setBookAdded(true)
 
         //sends Book whether or not to add the book to an array.
 
@@ -31,7 +31,7 @@ export default function AddBookButton({ onBookAdd }) {
 
     return (
         <div>
-            {bookAdded ?
+            {fill ?
                 <IoIosAddCircle style={iconStyle}
                     size="25"
                     fill="#7c8c79"

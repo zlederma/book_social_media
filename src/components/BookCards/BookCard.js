@@ -5,27 +5,41 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import AddBookButton from "./AddBookButton"
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { myBooksActions } from "../../store/mybooks";
+import { useState } from 'react';
 
 
 export default function BookCard({ title, author, picture }) {
 
     const dispatch = useDispatch();
+    const myBooks = useSelector((state) => state.myBooks.books)
+    const [fill, setFill] = useState(false)
 
-    const onBookAddHandler = (bookAdded) => {
-        console.log(bookAdded)
-
-        dispatch(myBooksActions.add({
+    const onBookAddHandler = () => {
+        const currBook = {
             title: title,
             author: author,
-            picture: { smallThumbnail: picture, thumbnail: picture },
-        }))
+            picture: { smallThumbnail: picture, thumbnail: picture }
+        }
+        const isIncluded = myBooks.some(e => e.picture.thumbnail === currBook.picture.thumbnail);
+        console.log("isIncluded :" + isIncluded)
+        if (!isIncluded) {
+            setFill(true)
+            dispatch(myBooksActions.add(currBook))
+        }
+
+        else {
+            // dispatch(myBooksActions.remove(currBook))
+            dispatch(myBooksActions.remove(myBooks.findIndex(e => e.picture.thumbnail === currBook.picture.thumbnail)))
+            setFill(false)
+        }
     }
 
     return (
         <Card sx={{ backgroundColor: "#f7f3f1" }}>
-            <AddBookButton onBookAdd={onBookAddHandler} />
+            {/* I should add a filled vs unfilled prop */}
+            <AddBookButton onBookAdd={onBookAddHandler} fill={fill} />
             <CardMedia sx={{ borderBottom: "1px solid #974c0f", objectFit: "scale-down" }}
                 component="img"
                 height="200"
