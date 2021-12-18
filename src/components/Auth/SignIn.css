@@ -1,0 +1,11 @@
+.auth-input {
+    border: 2px solid #abbca8;
+}
+
+.auth-input:active {
+    border: 2px solid #7c8c79;
+}
+
+.auth-input:focus {
+    border: 2px solid #7c8c79;
+}

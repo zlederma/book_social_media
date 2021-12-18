@@ -8,6 +8,8 @@ import BookCards from "./components/BookCards/BookCards"
 import NavBar from "./components/NavBar"
 import SearchBar from "./components/SearchBar"
 import MyLibrary from "./pages/MyLibrary"
+import SignIn from "./components/Auth/SignIn"
+import SignUp from "./components/Auth/SignUp"
 //Material UI imports
 import { ThemeProvider } from "@emotion/react";
 
@@ -33,6 +35,8 @@ function App() {
         <div style={{ maxWidth: "1400px", margin: "auto" }}>
           <BookCards books={books}></BookCards>
           <MyLibrary />
+          <SignIn />
+          <SignUp />
 
         </div>
       </div>
