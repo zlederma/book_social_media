@@ -8,13 +8,8 @@ import { useState, useContext, useRef } from "react"
 import { flexbox } from '@mui/system'
 import AuthContext from '../../store/auth-context'
 
-
+const API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
 export default function SignIn() {
-    const [isFocused, setIsFocused] = useState(false)
-    const inputClickHandler = () => {
-        setIsFocused(true)
-    }
-
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
 
@@ -24,47 +19,35 @@ export default function SignIn() {
     const [isLoading, setIsLoading] = useState(false);
 
     const switchAuthModeHandler = () => {
-        setIsLogin((previousState) => !previousState);
-    }
+        setIsLogin((prevState) => !prevState);
+    };
 
-    const submitHandler = (e) => {
-        e.preventDefault();
+    const submitHandler = (event) => {
+        event.preventDefault();
 
         const enteredEmail = emailInputRef.current.value;
         const enteredPassword = passwordInputRef.current.value;
-
-        let headers = new Headers();
-
-        headers.append('Content-Type', 'application/json');
-        headers.append('Access-Control-Allow-Origin', '*',)
-        // 'Access-Control-Allow-Origin': '*',
-        // 'Content-Type': 'application/json',
+        // optional: Add validation
 
         setIsLoading(true);
-
         let url;
-        const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY
-
         if (isLogin) {
-            url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`
+            url =
+                `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
         } else {
-            url = `https://identitytoolkit.googleapis.com/v1/
-        accounts:signUp?key=${FIREBASE_API_KEY}`
+            url =
+                `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
         }
-
         fetch(url, {
             method: 'POST',
-            mode: 'cors',
             body: JSON.stringify({
                 email: enteredEmail,
                 password: enteredPassword,
                 returnSecureToken: true,
             }),
-            headers: headers,
-            // headers: {
-            //     // 'Access-Control-Allow-Origin': '*',
-            //     // 'Content-Type': 'application/json',
-            // },
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
             .then((res) => {
                 setIsLoading(false);
@@ -73,20 +56,23 @@ export default function SignIn() {
                 } else {
                     return res.json().then((data) => {
                         console.log(data)
-                        console.log(enteredEmail)
-                        let errorMessage = 'Authentication Failed';
+                        let errorMessage = 'Authentication failed!';
+                        // if (data && data.error && data.error.message) {
+                        //   errorMessage = data.error.message;
+                        // }
+
                         throw new Error(errorMessage);
-                    })
+                    });
                 }
             })
             .then((data) => {
-                //expiration time
-                authCtx.login(data.idToken);
+                authCtx.login(data.idToken)
             })
             .catch((err) => {
-                alert(err.message)
-            })
-    }
+                alert(err.message);
+            });
+    };
+
 
     return (
         <Card elevation={3} style={{ maxWidth: "400px", margin: "auto", backgroundColor: "#f7f3f1", padding: "10px" }}>
@@ -94,7 +80,7 @@ export default function SignIn() {
             <form onSubmit={submitHandler}>
                 <div>
                     <InputLabel htmlFor="email" aria-describedby="my-helper-text"> Email</InputLabel>
-                    <Input className="auth-input" sx={{ mb: 3 }} id="email" inputRef={emailInputRef} fullWidth={true} disableUnderline={true} onClick={inputClickHandler} focused={true} />
+                    <Input className="auth-input" sx={{ mb: 3 }} id="email" inputRef={emailInputRef} fullWidth={true} disableUnderline={true} focused={true} />
                 </div>
                 <div>
                     <InputLabel htmlFor="password"> Password</InputLabel>
