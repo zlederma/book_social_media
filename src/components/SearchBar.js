@@ -2,10 +2,9 @@
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { theme } from "../styles/Theme"
 import { useState, useEffect } from 'react';
 
-const API_KEY = process.env.REACT_APP_API_KEY
+const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 
 export default function SearchBar({ onFetchBooks }) {
     const [isLoading, setIsLoading] = useState(false)
@@ -20,7 +19,7 @@ export default function SearchBar({ onFetchBooks }) {
             //it's never getting to this line figure
             console.log("checking")
             setInputValue(inputValue)
-        }, 500);
+        }, 400);
 
         return () => {
             console.log("clean")
@@ -31,7 +30,7 @@ export default function SearchBar({ onFetchBooks }) {
     async function onInputChangeHandler(e) {
         if (e.target.value.length >= 4) {
             setInputValue(e.target.value)
-            const fetchSearch = `https://www.googleapis.com/books/v1/volumes?q=${e.target.value}&projection=lite&langRestrict=en&key=${API_KEY}`;
+            const fetchSearch = `https://www.googleapis.com/books/v1/volumes?q=${e.target.value}&projection=lite&langRestrict=en&key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
 
             //if there is no query
             if (e.target.value === "") {
@@ -73,10 +72,9 @@ export default function SearchBar({ onFetchBooks }) {
                 }
                 return true
             }
-            console.log("before")
+
             console.log(transformedBooks)
             transformedBooks = transformedBooks.filter(toKeep);
-            console.log("after")
             console.log(transformedBooks)
 
             setBooks(transformedBooks);
