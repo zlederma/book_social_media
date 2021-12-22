@@ -8,9 +8,8 @@ import BookCards from "./components/BookCards/BookCards"
 import NavBar from "./components/NavBar"
 import SearchBar from "./components/SearchBar"
 import MyLibrary from "./pages/MyLibrary"
-import SignIn from "./components/Auth/SignIn"
-import SignIn2 from "./components/Auth/SignIn2"
-import SignUp from "./components/Auth/SignUp"
+import SignIn from "./pages/SignIn"
+
 //Material UI imports
 import { ThemeProvider } from "@emotion/react";
 
@@ -19,8 +18,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { useSelector } from "react-redux"
 
-import { getAuth } from "firebase/auth"
-const auth = getAuth();
+// import { getAuth, } from "firebase/auth"
+// const auth = getAuth();
+// const user = currentUser(auth);
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -42,7 +42,7 @@ function App() {
                 <SearchBar onFetchBooks={fetchBooksHandler} />
                 <BookCards books={books} /> </>} />
               <Route path="/my-library" element={<MyLibrary />} />
-              <Route path="/sign-in" element={<SignIn2 />} />
+              <Route path="/sign-in" element={<SignIn />} />
 
               {/* <Route path="/"/> */}
               {/* <BookCards books={books}></BookCards>
