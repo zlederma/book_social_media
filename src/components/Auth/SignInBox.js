@@ -11,7 +11,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 
 const auth = getAuth()
 
-export default function SignIn() {
+export default function SignInBox() {
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
 
@@ -69,7 +69,7 @@ export default function SignIn() {
 
 
     return (
-        <Card elevation={3} style={{ maxWidth: "400px", margin: "auto", backgroundColor: "#f7f3f1", padding: "10px" }}>
+        <Card elevation={3} style={{ width: "400px", maxWidth: "400px", backgroundColor: "#f7f3f1", padding: "10px", margin: "10px" }}>
             <Typography variant="h4"
                 sx={{ mb: 1 }}
                 style={{ textAlign: "center" }}>
