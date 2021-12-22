@@ -15,7 +15,7 @@ import SignUp from "./components/Auth/SignUp"
 import { ThemeProvider } from "@emotion/react";
 
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { useSelector } from "react-redux"
 
@@ -33,12 +33,17 @@ function App() {
     <ThemeProvider theme={theme}>
       <div style={background}>
         <NavBar />
-        <SearchBar onFetchBooks={fetchBooksHandler} />
+        {/* <SearchBar onFetchBooks={fetchBooksHandler} /> */}
         {/* maxes the viewport to 1100px */}
         <div style={{ maxWidth: "1400px", margin: "auto" }}>
-          <Router>
+          <BrowserRouter>
             <Routes>
-              <Route path="/my-library" component={SignIn2} />
+              <Route exact path="/" element={<>
+                <SearchBar onFetchBooks={fetchBooksHandler} />
+                <BookCards books={books} /> </>} />
+              <Route path="/my-library" element={<MyLibrary />} />
+              <Route path="/sign-in" element={<SignIn2 />} />
+
               {/* <Route path="/"/> */}
               {/* <BookCards books={books}></BookCards>
               <MyLibrary /> */}
@@ -46,7 +51,7 @@ function App() {
               {/* <SignIn2 />
               <SignUp /> */}
             </Routes>
-          </Router>
+          </BrowserRouter>
         </div>
       </div>
     </ThemeProvider >

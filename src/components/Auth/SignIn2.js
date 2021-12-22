@@ -3,6 +3,8 @@ import {
     InputLabel, Input, Typography,
     Button, Card
 } from '@mui/material'
+
+import { Link } from '@mui/material'
 import "./SignIn.css"
 import { useState, useRef } from "react"
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
@@ -99,6 +101,7 @@ export default function SignIn() {
                     <Button type='submit'
                         variant="contained"
                         color="secondary"
+                        href='home'
                         disableRipple sx={{ mt: 3 }}>
                         {isLogin ? 'Submit' : 'Create Account'}
                     </Button>
