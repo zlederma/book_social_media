@@ -9,15 +9,18 @@ import NavBar from "./components/NavBar"
 import SearchBar from "./components/SearchBar"
 import MyLibrary from "./pages/MyLibrary"
 import SignIn from "./components/Auth/SignIn"
+import SignIn2 from "./components/Auth/SignIn2"
 import SignUp from "./components/Auth/SignUp"
 //Material UI imports
 import { ThemeProvider } from "@emotion/react";
 
 import { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { useSelector } from "react-redux"
 
+import { getAuth } from "firebase/auth"
+const auth = getAuth();
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -33,11 +36,17 @@ function App() {
         <SearchBar onFetchBooks={fetchBooksHandler} />
         {/* maxes the viewport to 1100px */}
         <div style={{ maxWidth: "1400px", margin: "auto" }}>
-          <BookCards books={books}></BookCards>
-          <MyLibrary />
-          <SignIn />
-          <SignUp />
-
+          <Router>
+            <Routes>
+              <Route path="/my-library" component={SignIn2} />
+              {/* <Route path="/"/> */}
+              {/* <BookCards books={books}></BookCards>
+              <MyLibrary /> */}
+              {/* <SignIn /> */}
+              {/* <SignIn2 />
+              <SignUp /> */}
+            </Routes>
+          </Router>
         </div>
       </div>
     </ThemeProvider >
