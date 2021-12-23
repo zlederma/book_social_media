@@ -6,12 +6,18 @@ import {
 
 import { Link } from '@mui/material'
 import "./SignIn.css"
-import { useState, useRef } from "react"
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+import { useState, useRef, useEffect } from "react"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserSessionPersistence, browserLocalPersistence } from "firebase/auth"
+
+import { useDispatch, useSelector } from 'react-redux'
+import { isLoggedInActions } from "../../store/auth";
 
 const auth = getAuth()
 
 export default function SignInBox() {
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn)
+
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
 
@@ -31,21 +37,24 @@ export default function SignInBox() {
 
         setIsLoading(true);
         if (isLogin) {
-            signInWithEmailAndPassword(auth, enteredEmail, enteredPassword)
-                .then((userCredential) => {
-                    // Signed in 
-                    const user = userCredential.user;
-                    console.log(user);
-
+            setPersistence(auth, browserLocalPersistence)
+                .then(() => {
+                    // Existing and future Auth states are now persisted in the current
+                    // session only. Closing the window would clear any existing state even
+                    // if a user forgets to sign out.
                     // ...
+                    // New sign-in will be persisted with session persistence.
+                    return signInWithEmailAndPassword(auth, enteredEmail, enteredPassword);
                 })
                 .catch((error) => {
+                    // Handle Errors here.
                     const errorCode = error.code;
                     const errorMessage = error.message;
                 });
         } else {
             createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
                 .then((userCredential) => {
+                    setIsLoading(false)
                     // Signed in 
                     const user = userCredential.user;
                     console.log(user);
@@ -60,12 +69,27 @@ export default function SignInBox() {
 
     };
 
-    const handler = () => {
-        const user = auth.currentUser;
-        console.log(user);
-
-    }
-
+    const [test, setTest] = useState("initial");
+    useEffect(() => {
+        console.log('Running App useEffect...');
+        onAuthStateChanged(auth, (user) => {
+            if (user != null) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                setTest(user.uid)
+                console.log('onAuthstateworking')
+                dispatch(isLoggedInActions.setIsLoggedIn(true))
+                console.log(isLoggedIn)
+                // ...
+            } else {
+                console.log("out")
+                dispatch(isLoggedInActions.setIsLoggedIn(false))
+                console.log(isLoggedIn)
+                // User is signed out
+                // ...
+            }
+        });
+    }, []);
 
 
     return (
@@ -75,6 +99,8 @@ export default function SignInBox() {
                 style={{ textAlign: "center" }}>
                 {isLogin ? 'Sign In' : 'Sign Up'}
             </Typography>
+            <h1> {test} </h1>
+            <div> {isLoggedIn} </div>
             <form onSubmit={submitHandler}>
                 <div>
                     <InputLabel htmlFor="email" aria-describedby="my-helper-text"> Email</InputLabel>
@@ -101,7 +127,6 @@ export default function SignInBox() {
                     <Button type='submit'
                         variant="contained"
                         color="secondary"
-                        href='home'
                         disableRipple sx={{ mt: 3 }}>
                         {isLogin ? 'Submit' : 'Create Account'}
                     </Button>
