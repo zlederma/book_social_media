@@ -31,7 +31,6 @@ const NavBar = () => {
 
     const signOutHandler = () => {
         signOut(auth);
-        console.log(user)
     }
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -91,9 +90,9 @@ const NavBar = () => {
                             }}
                         >
                             {/* For when the screen is small*/}
-                            {pages.map((page) => (
+                            {pages.map((page, index) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Link href="/small" textAlign="center">{page}</Link>
+                                    <Link href={links[index]} textAlign="center">{page}</Link>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -108,9 +107,9 @@ const NavBar = () => {
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {/* For when the screen is big */}
-                        {pages.map((page) => (
+                        {pages.map((page, index) => (
                             <Button
-                                href="/big"
+                                href={links[index]}
                                 key={page}
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
