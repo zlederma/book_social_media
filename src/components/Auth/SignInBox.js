@@ -7,7 +7,7 @@ import {
 import { Link } from '@mui/material'
 import "./SignIn.css"
 import { useState, useRef, useEffect } from "react"
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserSessionPersistence, browserLocalPersistence } from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, inMemoryPersistence, } from "firebase/auth"
 
 import { useDispatch, useSelector } from 'react-redux'
 import { isLoggedInActions } from "../../store/auth";
@@ -37,23 +37,25 @@ export default function SignInBox() {
 
         setIsLoading(true);
         if (isLogin) {
-            setPersistence(auth, browserLocalPersistence)
-                .then(() => {
-                    // Existing and future Auth states are now persisted in the current
-                    // session only. Closing the window would clear any existing state even
-                    // if a user forgets to sign out.
+            signInWithEmailAndPassword(auth, enteredEmail, enteredPassword)
+                .then((userCredential) => {
+                    console.log(userCredential)
+                    localStorage.setItem('token', userCredential._tokenResponse.idToken);
+                    setIsLoading(false)
+                    // Signed in 
+                    const user = userCredential.user;
+                    console.log(user);
+
                     // ...
-                    // New sign-in will be persisted with session persistence.
-                    return signInWithEmailAndPassword(auth, enteredEmail, enteredPassword);
                 })
                 .catch((error) => {
-                    // Handle Errors here.
                     const errorCode = error.code;
                     const errorMessage = error.message;
                 });
         } else {
             createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
                 .then((userCredential) => {
+                    localStorage.setItem('token', userCredential._tokenResponse.idToken);
                     setIsLoading(false)
                     // Signed in 
                     const user = userCredential.user;

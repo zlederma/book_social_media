@@ -31,6 +31,7 @@ const NavBar = () => {
 
     const signOutHandler = () => {
         signOut(auth);
+        localStorage.removeItem('token')
     }
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);

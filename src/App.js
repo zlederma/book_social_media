@@ -22,8 +22,14 @@ import { isLoggedInActions } from "./store/auth"
 
 function App() {
 
-  const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn)
-
+  // const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn)
+  let isLoggedIn = false;
+  if (localStorage.getItem('token') === null) {
+    isLoggedIn = false;
+  }
+  else {
+    isLoggedIn = true;
+  }
   //Renders different elements depending on if the user is logged in or not
   const home = () => {
     if (isLoggedIn) {
@@ -31,7 +37,8 @@ function App() {
       return (
         <>
           <SearchBar onFetchBooks={fetchBooksHandler} />
-          <BookCards books={books} /> </>
+          <BookCards books={books} />
+          <MyLibrary /> </>
       )
     } else {
       return (

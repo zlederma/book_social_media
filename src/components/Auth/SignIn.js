@@ -7,12 +7,11 @@ import "./SignIn.css"
 import { useState, useContext, useRef } from "react"
 import { flexbox } from '@mui/system'
 import AuthContext from '../../store/auth-context'
-import { getAuth } from "firebase/auth"
 import { database } from '../../firebase/firebase-config'
 import { getDatabase, ref, set } from 'firebase/database';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, inMemoryPersistence, } from "firebase/auth"
 
 const API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
-const auth = getAuth()
 
 // function writeUserData(userId, name, email, imageUrl) {
 //     const db = getDatabase();
@@ -22,7 +21,7 @@ const auth = getAuth()
 //       profile_picture : imageUrl
 //     });
 //   }
-
+const auth = getAuth()
 export default function SignIn() {
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
@@ -43,56 +42,47 @@ export default function SignIn() {
         // optional: Add validation
 
         setIsLoading(true);
-        let url;
         if (isLogin) {
-            url =
-                `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
+            signInWithEmailAndPassword(auth, enteredEmail, enteredPassword)
+                .then((userCredential) => {
+                    console.log(userCredential)
+                    setIsLoading(false)
+                    // Signed in 
+                    // const user = userCredential.user;
+                    // console.log(user);
+                    // const expirationTime = new Date(
+                    //     new Date().getTime() + + userCredential.expiresIn * 1000
+                    // );
+                    // authCtx.login(userCredential.user.accessToken, expirationTime.toISOString())
+                    localStorage.setItem('token', userCredential._tokenResponse.idToken);
+                    // ...
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                });
         } else {
-            url =
-                `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
+            createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
+                .then((userCredential) => {
+                    setIsLoading(false)
+                    // Signed in 
+                    const user = userCredential.user;
+                    console.log(user);
+                    const expirationTime = new Date(
+                        new Date().getTime() + + userCredential.expiresIn * 1000
+                    );
+                    authCtx.login(userCredential._tokenResponse.idToken, expirationTime.toISOString())
+                    // ...
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // ..
+                });
         }
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify({
-                email: enteredEmail,
-                password: enteredPassword,
-                returnSecureToken: true,
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((res) => {
-                setIsLoading(false);
-                if (res.ok) {
-                    console.log(res);
-                    return res.json();
-                } else {
-                    return res.json().then((data) => {
-                        console.log(data)
-                        let errorMessage = 'Authentication failed!';
-                        // if (data && data.error && data.error.message) {
-                        //   errorMessage = data.error.message;
-                        // }
-
-                        throw new Error(errorMessage);
-                    });
-                }
-            })
-            .then((data) => {
-                authCtx.login(data.idToken)
-            })
-            .catch((err) => {
-                alert(err.message);
-            });
 
     };
 
-    const handler = () => {
-        const user = auth.currentUser;
-        console.log(user);
-
-    }
 
 
 
@@ -140,7 +130,6 @@ export default function SignIn() {
                         {isLogin ? 'Create New Account' : 'Login with existing account'} </Button>
                 </div>
             </form>
-            <button onClick={handler}> click me </button>
         </Card>
     )
 }
