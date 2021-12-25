@@ -8,9 +8,11 @@ import { Link } from '@mui/material'
 import "./SignIn.css"
 import { useState, useRef, useEffect } from "react"
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, inMemoryPersistence, browserLocalPersistence } from "firebase/auth"
+import { getDatabase, ref, set, child, get } from "firebase/database";
 
 import { useDispatch, useSelector } from 'react-redux'
 import { isLoggedInActions } from "../../store/auth";
+
 
 const auth = getAuth()
 
@@ -28,12 +30,20 @@ export default function SignInBox() {
         setIsLogin((prevState) => !prevState);
     };
 
+    //This will create a node for a user on account creation
+    const db = getDatabase();
+    function writeUserData(userId, email) {
+        set(ref(db, 'users/' + userId), {
+            profile: { email: email },
+        });
+    }
+
     const submitHandler = (event) => {
         event.preventDefault();
 
         const enteredEmail = emailInputRef.current.value;
         const enteredPassword = passwordInputRef.current.value;
-        // optional: Add validation
+        //TODO: Add verify password
 
         setIsLoading(true);
         if (isLogin) {
@@ -55,9 +65,11 @@ export default function SignInBox() {
                     const errorMessage = error.message;
                 });
         } else {
-            createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
+            setPersistence(auth, browserLocalPersistence).then(() => {
+                return createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
+            })
                 .then((userCredential) => {
-                    localStorage.setItem('token', userCredential._tokenResponse.idToken);
+                    writeUserData(userCredential.user.uid, enteredEmail)
                     setIsLoading(false)
                     // Signed in 
                     const user = userCredential.user;
@@ -72,29 +84,6 @@ export default function SignInBox() {
         }
 
     };
-
-    const [test, setTest] = useState("initial");
-    useEffect(() => {
-        console.log('Running App useEffect...');
-        onAuthStateChanged(auth, (user) => {
-            if (user != null) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
-                setTest(user.uid)
-                console.log('onAuthstateworking')
-                dispatch(isLoggedInActions.setIsLoggedIn(true))
-                console.log(isLoggedIn)
-                // ...
-            } else {
-                console.log("out")
-                dispatch(isLoggedInActions.setIsLoggedIn(false))
-                console.log(isLoggedIn)
-                // User is signed out
-                // ...
-            }
-        });
-    }, []);
-
 
     return (
         <Card elevation={3} style={{ width: "400px", maxWidth: "400px", backgroundColor: "#f7f3f1", padding: "10px", margin: "10px" }}>
