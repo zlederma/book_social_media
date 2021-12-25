@@ -37,10 +37,12 @@ export default function SignInBox() {
 
         setIsLoading(true);
         if (isLogin) {
-            signInWithEmailAndPassword(auth, enteredEmail, enteredPassword)
+            setPersistence(auth, browserLocalPersistence).then(() => {
+                return signInWithEmailAndPassword(auth, enteredEmail, enteredPassword)
+            })
                 .then((userCredential) => {
                     console.log(userCredential)
-                    localStorage.setItem('token', userCredential._tokenResponse.idToken);
+                    // localStorage.setItem('token', userCredential._tokenResponse.idToken);
                     setIsLoading(false)
                     // Signed in 
                     const user = userCredential.user;

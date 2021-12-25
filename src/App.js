@@ -18,17 +18,29 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { useSelector } from "react-redux"
 import { isLoggedInActions } from "./store/auth"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
+const auth = getAuth();
 
 function App() {
-
-  // const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn)
-  let isLoggedIn = false;
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in
+      const uid = user.uid;
+      console.log(uid)
+      setIsLoggedIn(true);
+      // ...
+    } else {
+      setIsLoggedIn(false);
+      // User is signed out
+      // ...
+    }
+  });
 
   //Renders different elements depending on if the user is logged in or not
   const home = () => {
     if (isLoggedIn) {
-      console.log(isLoggedIn)
       return (
         <>
           <SearchBar onFetchBooks={fetchBooksHandler} />
