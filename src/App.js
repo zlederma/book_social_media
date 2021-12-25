@@ -24,12 +24,7 @@ function App() {
 
   // const isLoggedIn = useSelector((state) => state.isLoggedIn.isLoggedIn)
   let isLoggedIn = false;
-  if (localStorage.getItem('token') === null) {
-    isLoggedIn = false;
-  }
-  else {
-    isLoggedIn = true;
-  }
+
   //Renders different elements depending on if the user is logged in or not
   const home = () => {
     if (isLoggedIn) {
@@ -53,7 +48,7 @@ function App() {
   const fetchBooksHandler = (books) => {
     setBooks(books)
   }
-  console.log(isLoggedIn)
+
   const loggedIn = "Currently you are logged in: " + isLoggedIn
 
   return (

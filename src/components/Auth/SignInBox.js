@@ -7,7 +7,7 @@ import {
 import { Link } from '@mui/material'
 import "./SignIn.css"
 import { useState, useRef, useEffect } from "react"
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, inMemoryPersistence, } from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, inMemoryPersistence, browserLocalPersistence } from "firebase/auth"
 
 import { useDispatch, useSelector } from 'react-redux'
 import { isLoggedInActions } from "../../store/auth";
@@ -101,8 +101,6 @@ export default function SignInBox() {
                 style={{ textAlign: "center" }}>
                 {isLogin ? 'Sign In' : 'Sign Up'}
             </Typography>
-            <h1> {test} </h1>
-            <div> {isLoggedIn} </div>
             <form onSubmit={submitHandler}>
                 <div>
                     <InputLabel htmlFor="email" aria-describedby="my-helper-text"> Email</InputLabel>
