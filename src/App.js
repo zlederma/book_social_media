@@ -19,20 +19,24 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import { isLoggedInActions } from "./store/auth"
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Test from "./Test"
 
 const auth = getAuth();
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [uid, setUid] = useState("")
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in
       const uid = user.uid;
       console.log(uid)
       setIsLoggedIn(true);
+      setUid(uid);
       // ...
     } else {
       setIsLoggedIn(false);
+      setUid("")
       // User is signed out
       // ...
     }
@@ -69,6 +73,7 @@ function App() {
 
         {isLoggedIn ? <NavBar /> : <div> </div>}
         <h1> {loggedIn} </h1>
+        <Test />
         {/* <SearchBar onFetchBooks={fetchBooksHandler} /> */}
         {/* maxes the viewport to 1100px */}
         <div style={{ maxWidth: "1400px", margin: "auto" }}>

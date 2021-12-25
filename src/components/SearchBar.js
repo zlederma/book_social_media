@@ -40,8 +40,10 @@ export default function SearchBar({ onFetchBooks }) {
             //query must be at least 4 letters long
             const response = await fetch(fetchSearch);
             const data = await response.json();
+            console.log(data)
 
             let transformedBooks = data.items.map((bookData) => {
+                console.log(bookData)
                 //error catching for if there is no image
                 //TODO update error catching somehow add author
                 const badAuthor = () => {
@@ -59,10 +61,10 @@ export default function SearchBar({ onFetchBooks }) {
                     }
                 }
                 return {
+                    id: bookData.id,
                     title: bookData.volumeInfo.title,
                     author: bookData.volumeInfo.authors[0],
                     picture: bookData.volumeInfo.imageLinks,
-
                 };
             });
 
