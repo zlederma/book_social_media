@@ -1,7 +1,7 @@
 //This keeps track of whether or not a user is logged in.
 import { createSlice } from '@reduxjs/toolkit'
 //initally books is an arrary of objects
-const initialIsLoggedInState = { isLoggedIn: false }
+const initialIsLoggedInState = { isLoggedIn: false, uid: null }
 
 
 const isLoggedInSlice = createSlice({
@@ -18,6 +18,9 @@ const isLoggedInSlice = createSlice({
 
         setIsLoggedIn(state, action) {
             state.isLoggedIn = action.payload;
+        },
+        setUid(state, action) {
+            state.uid = action.payload;
         }
     }
 })
