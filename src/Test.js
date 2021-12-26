@@ -42,7 +42,7 @@ function writeCorrectUserData(userId, email, bookarr) {
 
 export default function Test() {
     const clickHandler = () => {
-        writeCorrectUserData("5", "a@a.com", bookarr)
+        writeCorrectUserData("post1", "a@a.com", bookarr)
         // get(child(dbRef, `users/${"33"}`)).then((snapshot) => {
         //     if (snapshot.exists()) {
         //         console.log(snapshot.val());

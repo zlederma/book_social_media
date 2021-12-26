@@ -22,7 +22,8 @@ export default function BookCards({ books }) {
                     <Grid item xs={6} sm={3} md={2} lg={2}>
                         <BookCard title={book.title}
                             author={book.author}
-                            picture={book.picture.thumbnail} />
+                            picture={book.picture.thumbnail}
+                            id={book.id} />
                     </Grid>)}
 
             </Grid>
