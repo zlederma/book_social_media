@@ -15,28 +15,28 @@ import { ThemeProvider } from "@emotion/react";
 
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
-import { useSelector } from "react-redux"
 import { isLoggedInActions } from "./store/auth"
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Test from "./Test"
+import { useDispatch, useSelector } from 'react-redux'
 
 const auth = getAuth();
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const dispatch = useDispatch()
+  const currUID = useSelector((state) => state.isLoggedIn.uid)
   const [uid, setUid] = useState("")
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in
       const uid = user.uid;
-      console.log(uid)
+      dispatch(isLoggedInActions.setUid(uid))
       setIsLoggedIn(true);
-      setUid(uid);
       // ...
     } else {
       setIsLoggedIn(false);
-      setUid("")
+      dispatch(isLoggedInActions.setUid(null))
       // User is signed out
       // ...
     }
