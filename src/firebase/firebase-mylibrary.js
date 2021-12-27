@@ -1,5 +1,6 @@
-import { getDatabase, ref, set, child, get, push, remove, setKey, onValue } from "firebase/database";
+import { getDatabase, ref, child, get, push, remove, setKey, onValue } from "firebase/database";
 import { useState } from 'react'
+import { map } from "@firebase/util";
 
 // const db = getDatabase();
 // const dbRef = ref(dbRef);
@@ -10,11 +11,11 @@ import { useState } from 'react'
 //containsBook
 //assume we are already in the libary ref
 
-export function addBook(uid, book) {
-    const libraryRef = ref(getDatabase(), 'users/' + uid + '/library')
-    const newBookRef = push(libraryRef)
-    set(newBookRef, book)
-}
+// export function addBook(uid, book) {
+//     const libraryRef = ref(getDatabase(), 'users/' + uid + '/library')
+//     const newBookRef = push(libraryRef)
+//     set(newBookRef, book)
+// }
 
 export function getBooks(uid) {
     const libraryRef = ref(getDatabase(), 'users/' + uid + '/library')
@@ -29,22 +30,17 @@ export function getBooks(uid) {
     });
 }
 
-export function containsBook(uid, currId) {
-    console.log("current" + currId)
+export async function containsBook(uid, currId) {
+    const bookIds = []
     const libraryRef = ref(getDatabase(), 'users/' + uid + '/library');
-    onValue(libraryRef, (snapshot) => {
+    await get(libraryRef).then((snapshot) => {
         snapshot.forEach((childSnapshot) => {
-            //   const childKey = childSnapshot.key;
-            console.log(childSnapshot.val().id)
-            if (childSnapshot.val().id === currId) {
-                console.log("it is true")
-                return true
-            }
-            // ...
+            bookIds.push(childSnapshot.val().id);
         });
-    });
 
-    return false
+    });
+    return bookIds.includes(currId)
+
 }
 
 export function removeBook(uid) {

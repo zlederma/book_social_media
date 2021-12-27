@@ -27,10 +27,10 @@ export default function BookCard({ title, author, picture, id }) {
             picture: { smallThumbnail: picture, thumbnail: picture }
         }
 
-        addBook("6", currBook)
-        console.log(getBooks("6"))
+        // addBook("7", currBook)
+        // console.log(getBooks("6"))
         console.log("contains")
-        console.log(containsBook("6", currBook.id))
+        console.log(containsBook("7", currBook.id))
         // setIsContained(containsBook("6", currBook.id))
         // console.log("contains")
         // console.log(isContained)
