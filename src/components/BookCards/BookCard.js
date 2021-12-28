@@ -17,6 +17,7 @@ export default function BookCard({ title, author, picture, id }) {
     const [fill, setFill] = useState(false)
     const [myBooks, setMyBooks] = useState([])
     const [isContained, setIsContained] = useState(true)
+    // const uid = useSelector((state) => state.logg)
 
     const onBookAddHandler = () => {
 
@@ -30,10 +31,12 @@ export default function BookCard({ title, author, picture, id }) {
         // addBook("7", currBook)
         // console.log(getBooks("6"))
         console.log("contains")
-        console.log(containsBook("7", currBook.id))
+
+        // console.log(containsBook("7", currBook.id))
+        //Async function
+        containsBook("7", currBook.id).then(result => setFill(result))
         // setIsContained(containsBook("6", currBook.id))
-        // console.log("contains")
-        // console.log(isContained)
+
         // removeBook("6")
 
 
