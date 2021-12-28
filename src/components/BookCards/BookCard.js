@@ -7,17 +7,22 @@ import AddBookButton from "./AddBookButton"
 import { getDatabase, ref, set, child, get, } from "firebase/database";
 import { useDispatch, useSelector } from 'react-redux'
 import { myBooksActions } from "../../store/mybooks";
-import { useState } from 'react';
-import { addBook, getBooks, removeBook, containsBook } from '../../firebase/firebase-mylibrary';
+import { useState, useEffect } from 'react';
+import { addBook, getBooks, removeBook, containsBook, getKey } from '../../firebase/firebase-mylibrary';
 // const db = getDatabase();
 // const dbRef = ref(db);
 
 export default function BookCard({ title, author, picture, id }) {
 
     const [fill, setFill] = useState(false)
-    const [myBooks, setMyBooks] = useState([])
+    const [book, setBook] = useState({})
+    const [key, setKey] = useState("")
     const [isContained, setIsContained] = useState(true)
     // const uid = useSelector((state) => state.logg)
+    useEffect(() => {
+    }, [fill])
+
+
 
     const onBookAddHandler = () => {
 
@@ -27,35 +32,21 @@ export default function BookCard({ title, author, picture, id }) {
             author: author,
             picture: { smallThumbnail: picture, thumbnail: picture }
         }
+        // setBook(currBook)
 
-        // addBook("7", currBook)
-        // console.log(getBooks("6"))
-        console.log("contains")
-
-        // console.log(containsBook("7", currBook.id))
-        //Async function
-        containsBook("7", currBook.id).then(result => setFill(result))
-        // setIsContained(containsBook("6", currBook.id))
-
-        // removeBook("6")
-
-
-        // const isIncluded = myBooks.some(e => e.picture.thumbnail === currBook.picture.thumbnail);
-        // console.log("isIncluded :" + isIncluded)
-        // if (!isIncluded) {
-        //     setFill(true)
-        //     // dispatch(myBooksActions.add(currBook))
-        // }
-
-        // else {
-        //     // dispatch(myBooksActions.remove(myBooks.findIndex(e => e.picture.thumbnail === currBook.picture.thumbnail)))
-        //     setFill(false)
-        // }
-        // const userId = "6"
-        // // set(ref(db, 'users/' + userId), {
-        // //     profile: { email: "p" },
-        // //     library: myBooks
-        // // });
+        //if no key, the book does not exist and is undefined.
+        //do some kind of setloading
+        //works except fill does not work for books already in the libary
+        getKey("7", currBook.id).then(result => {
+            if (typeof result === "undefined") {
+                addBook("7", currBook)
+                setFill(true)
+            } else {
+                removeBook("7", result)
+                setKey(result)
+                setFill(false)
+            }
+        })
 
     }
 

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { IoIosAddCircleOutline, IoIosAddCircle } from "react-icons/io";
-
+import { useEffect } from 'react';
 
 //Ionicons 4
 
@@ -15,8 +15,11 @@ const iconStyle = {
 export default function AddBookButton({ onBookAdd, fill }) {
     //This will keep track of whether or not a book is added to someones library
     // const [bookAdded, setBookAdded] = useState(false)
+    // useEffect(() => {
+    //     onBookAdd()
 
-    console.log(fill)
+    // }, [onBookAdd])
+
     const onClickHandler = () => {
         //sends Book whether or not to add the book to an array.
         // onBookAdd(bookAdded)
