@@ -8,7 +8,7 @@ import { getDatabase, ref, set, child, get, } from "firebase/database";
 import { useDispatch, useSelector } from 'react-redux'
 import { myBooksActions } from "../../store/mybooks";
 import { useState, useEffect } from 'react';
-import { addBook, getBooks, removeBook, containsBook, getKey } from '../../firebase/firebase-mylibrary';
+import { addBook, getBooks, removeBook, containsBook, getKey, getBookIds } from '../../firebase/firebase-mylibrary';
 // const db = getDatabase();
 // const dbRef = ref(db);
 
@@ -22,7 +22,9 @@ export default function BookCard({ title, author, picture, id }) {
     useEffect(() => {
     }, [fill])
 
-
+    // getBookIds("7").then(result =>{
+    //     if
+    // })
 
     const onBookAddHandler = () => {
 
