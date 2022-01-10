@@ -7,10 +7,10 @@ import AddBookButton from "./AddBookButton"
 import { getDatabase, ref, set, child, get, } from "firebase/database";
 import { useDispatch, useSelector } from 'react-redux'
 import { myBooksActions } from "../../store/mybooks";
+import { isLoggedInActions } from '../../store/auth';
 import { useState, useEffect } from 'react';
 import { addBook, getBooks, removeBook, containsBook, getKey, getBookIds } from '../../firebase/firebase-mylibrary';
-// const db = getDatabase();
-// const dbRef = ref(db);
+
 
 export default function BookCard({ title, author, picture, id }) {
 
@@ -18,13 +18,20 @@ export default function BookCard({ title, author, picture, id }) {
     const [book, setBook] = useState({})
     const [key, setKey] = useState("")
     const [isContained, setIsContained] = useState(true)
-    // const uid = useSelector((state) => state.logg)
+    const uid = useSelector((state) => state.isLoggedIn.uid)
+    // const currUID = useSelector((state) => state.isLoggedIn.uid)
     useEffect(() => {
     }, [fill])
 
-    // getBookIds("7").then(result =>{
-    //     if
-    // })
+    //Sets the correct fill when the search changes.
+    getKey(uid, id).then(result => {
+        if (typeof result === "undefined") {
+            setFill(false)
+        } else {
+            setFill(true)
+        }
+    })
+
 
     const onBookAddHandler = () => {
 
@@ -39,12 +46,12 @@ export default function BookCard({ title, author, picture, id }) {
         //if no key, the book does not exist and is undefined.
         //do some kind of setloading
         //works except fill does not work for books already in the libary
-        getKey("7", currBook.id).then(result => {
+        getKey(uid, currBook.id).then(result => {
             if (typeof result === "undefined") {
-                addBook("7", currBook)
+                addBook(uid, currBook)
                 setFill(true)
             } else {
-                removeBook("7", result)
+                removeBook(uid, result)
                 setKey(result)
                 setFill(false)
             }
